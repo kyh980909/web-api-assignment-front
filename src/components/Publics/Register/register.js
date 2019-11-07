@@ -14,10 +14,6 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const Row = styled.div`
-  display: flex;
-`;
-
 const Label = styled.div``;
 
 const RegisterForm = styled.div`
@@ -74,8 +70,6 @@ class Register extends React.Component {
     const username = this.state.username;
     const password = this.state.password;
 
-    console.log(username);
-    console.log(password);
     if (username === '') alert('아이디를 입력해주세요!');
     else if (password === '') alert('비밀번호를 입력해주세요!');
     else {
@@ -113,23 +107,19 @@ class Register extends React.Component {
           <RegisterForm>
             <Label className="register-label">Sign up</Label>
             <Label className="username-label">Your ID</Label>
-            <Row>
-              <input
-                autoFocus
-                name="username"
-                value={this.username}
-                onChange={this.handleInput}
-              />
-            </Row>
+            <input
+              autoFocus
+              name="username"
+              value={this.username}
+              onChange={this.handleInput}
+            />
             <Label className="password-label">Your Password</Label>
-            <Row>
-              <input
-                name="password"
-                type="password"
-                value={this.password}
-                onChange={this.handleInput}
-              />
-            </Row>
+            <input
+              name="password"
+              type="password"
+              value={this.password}
+              onChange={this.handleInput}
+            />
             <RegisterBt onClick={this.register}>Register</RegisterBt>
           </RegisterForm>
         </Container>

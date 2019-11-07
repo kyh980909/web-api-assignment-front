@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import './login.css';
+
+const EndPoint = 'http://localhost:4000/api/account/';
 
 const Container = styled.div`
   width: 100%;
@@ -57,20 +60,67 @@ const LoginForm = styled.div`
 `;
 
 class LoginComponent extends React.Component {
+  state = {
+    username: '',
+    password: ''
+  };
+
   register = () => {
     window.location.href = '/register';
   };
 
-  login = () => {};
+  login = () => {
+    const username = this.state.username;
+    const password = this.state.password;
+    const { loginUser } = this.props;
+
+    if (username === '') alert('아이디를 입력해주세요!');
+    else if (password === '') alert('비밀번호를 입력해주세요!');
+    else {
+      axios
+        .post(EndPoint + 'login', {
+          username,
+          password
+        })
+        .then(res => res.data)
+        .then(data => {
+          const { ok, error } = data;
+          if (ok) {
+            alert('로그인 성공!');
+            loginUser();
+            window.location.href = '/';
+          } else {
+            alert(error);
+          }
+        })
+        .catch(err => console.error(err));
+    }
+  };
+
+  handleInput = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
   render() {
     return (
       <Container>
         <LoginForm>
           <Label className="sign-label">Sign in</Label>
           <Label className="username-label">Your ID</Label>
-          <input autoFocus />
-          <Label className="password-label">Your Password:</Label>
-          <input type="passowrd" />
+          <input
+            autoFocus
+            name="username"
+            value={this.username}
+            onChange={this.handleInput}
+          />
+          <Label className="password-label">Your Password</Label>
+          <input
+            name="password"
+            type="password"
+            value={this.password}
+            onChange={this.handleInput}
+          />
           <Row>
             <LoginBt onClick={this.login}>Login</LoginBt>
             <RegisterBt onClick={this.register}>Register</RegisterBt>
