@@ -1,26 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Public from './components/public';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class AppContainer extends React.Component {
+  state = {
+    isLoggedIn: false
+  };
+  render() {
+    const { isLoggedIn } = this.state;
+    return <App isLoggedIn={isLoggedIn} />;
+  }
 }
 
-export default App;
+function App({ isLoggedIn }) {
+  return <div className="App">{isLoggedIn ? 'login된 화면' : <Public />}</div>;
+}
+
+export default AppContainer;
